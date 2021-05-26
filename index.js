@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(cors())
 app.use(express.static('build'))
 
-morgan.token('body', (request, response) => JSON.stringify(request.body))
+morgan.token('body', (request) => JSON.stringify(request.body))
 const morganConfig = ':method :url :status :res[content-length] - :response-time ms :body'
 app.use(morgan(morganConfig))
 
@@ -25,7 +25,7 @@ app.get('/info', (request, response, next) => {
       <p>
         ${new Date()}
       </p>`
-      
+
       response.send(infoContent)
     })
     .catch(error => next(error))
@@ -53,7 +53,7 @@ app.get('/api/persons/:id', (request, response, next) => {
 
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndDelete(request.params.id)
-    .then(result => {
+    .then(() => {
       response.status(204).end()
     })
     .catch(error => next(error))
@@ -95,7 +95,7 @@ app.put('/api/persons/:id', (request, response, next) => {
 })
 
 const unknownEndpoint = (request, response) => {
-  response.status(404).send({error: 'unknown endpoint'})
+  response.status(404).send({ error: 'unknown endpoint' })
 }
 
 app.use(unknownEndpoint)

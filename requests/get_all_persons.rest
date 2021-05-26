@@ -1,1 +1,1 @@
-GET http://localhost:3001/api/persons
+GET https://ancient-beach-40658.herokuapp.com/api/persons
